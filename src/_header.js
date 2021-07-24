@@ -30,7 +30,7 @@ function header() {
   let myHeader = simpleHtmlTag.makeTag('header', 'header');
   let myLogoAndNameDiv = simpleHtmlTag.makeDiv('logo-name');
   let myLogoDiv = logoDiv.makeLogoDiv('logo-name__logo', logoSVG);
-  let myNameDiv = logoDiv.makeTextDiv('logo-name__name', 'p', 'company name');
+  let myNameDiv = logoDiv.makeTextDiv('logo-name__name', 'p', 'TooDoo');
   let myUserDiv = simpleHtmlTag.makeDiv('user');
   let myUser = userDiv.makeUserDiv('user__icon', userSVG);
 
