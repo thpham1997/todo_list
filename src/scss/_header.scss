@@ -1,5 +1,5 @@
 .header {
-  height: 7rem;
+  grid-area: header;
   display: grid;
   grid-template-columns: 50% 50%;
   .logo-name {
