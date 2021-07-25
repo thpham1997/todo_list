@@ -1,9 +1,5 @@
 .navbar{
-  position: absolute;
-  width: 12rem;
-  height: auto;
-  bottom: 0;
-  top: 7rem;
+  grid-area: navbar;
   display: grid;
   grid-template-rows: 50% 50%;
   .status{
