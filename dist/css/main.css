@@ -57,12 +57,16 @@ html, body {
 }
 
 .content {
+  display: grid;
+  grid-template-areas: "header header" "navbar todoList" "footer footer";
+  grid-template-columns: 12rem 1fr;
+  grid-template-rows: 7rem 1fr 3rem;
   width: 100%;
   height: 100%;
 }
 
 .header {
-  height: 7rem;
+  grid-area: header;
   display: grid;
   grid-template-columns: 50% 50%;
 }
@@ -93,11 +97,7 @@ html, body {
 }
 
 .navbar {
-  position: absolute;
-  width: 12rem;
-  height: auto;
-  bottom: 0;
-  top: 7rem;
+  grid-area: navbar;
   display: grid;
   grid-template-rows: 50% 50%;
 }
