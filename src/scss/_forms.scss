@@ -1,0 +1,31 @@
+.project{
+
+  &__form{
+    width: 12rem;
+    height: 6rem;
+    display: none;
+  }
+
+  &__name{
+    display: block;
+    width: 10rem;
+    height: 2rem;
+    margin: 0.5rem auto;
+  }
+
+  &__confirm, &__cancel{
+    display: inline-block;
+    width: 5rem;
+  }
+
+  &__confirm{
+    margin-left: 0.5rem;
+  }
+
+  &__cancel{
+    margin-left: 1rem;
+  }
+}
+.show{
+  display: block;
+}
