@@ -1,38 +1,36 @@
 import simpleHtmlTag from "./_simplefuntion";
 
-function todoList() {
+function todoList(projectName) {
 
-  function setProjectName(projectName) {
-    this.projectName = projectName;
-    this.project = [];
-  }
+  let name = projectName;
+  let project = [];
 
   function getProjectName() {
-    return this.projectName;
+    return name;
   }
 
   function getList() {
-    return this.project;
+    return project;
   }
 
   function add(todoItem) {
-    this.project.push(todoItem);
+    project.push(todoItem);
   }
 
   function getItem(index) {
-    return this.project[index];
+    return project[index];
   }
 
   function deleteItem(index) {
-    let deleted = this.project.splice(index, 1)[0];
+    let deleted = project.splice(index, 1)[0];
     return deleted;
   }
 
   function getLength() {
-    return this.project.length;
+    return project.length;
   }
 
-  return { getList, add, getItem, deleteItem, getLength, getProjectName, setProjectName };
+  return { getList, add, getItem, deleteItem, getLength, getProjectName };
 }
 function projectController() {
   const PROJECT = document.querySelector('.project');
@@ -45,11 +43,11 @@ function projectController() {
     newProject.innerHTML = todoList.getProjectName();
     PROJECT.appendChild(newProject);
   }
-  function getProjects(){
+  function getProjects() {
     return projects;
   }
 
-  function getProject(index){
+  function getProject(index) {
     return projects[index];
   }
   /**
@@ -89,14 +87,30 @@ function navbar() {
   statusDiv.appendChild(notFinisedBtn);
 
   let projectDiv = simpleHtmlTag.makeDiv('project');
+  let addingForm = simpleHtmlTag.makeTag('form', 'project__form');
+  let projectName = simpleHtmlTag.makeTag('input', 'project__name');
+  projectName.type = 'text';
+  projectName.required = true;
+  projectName.placeholder = 'List Name';
+  let confirmBtn = simpleHtmlTag.makeTag('button', 'project__confirm');
+  confirmBtn.innerHTML = 'Confirm';
+  confirmBtn.type = 'submit';
+  let cancelBtn = simpleHtmlTag.makeTag('button', 'project__cancel');
+  cancelBtn.innerHTML = 'Cancel';
   let addProjectBtn = simpleHtmlTag.makeTag('button', 'project__add');
   addProjectBtn.innerHTML = '+';
 
+  projectDiv.appendChild(addingForm);
+  addingForm.appendChild(projectName);
+  addingForm.appendChild(confirmBtn);
+  addingForm.appendChild(cancelBtn);
   projectDiv.appendChild(addProjectBtn);
+  
   navBar.appendChild(statusDiv);
   navBar.appendChild(projectDiv)
 
   return navBar;
 }
+
 
 export { navbar, todoList, projectController };
