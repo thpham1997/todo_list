@@ -19,10 +19,11 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    & *{
+    & > button{
       font-weight: bold;
       width: 8rem;
       height: 2.4rem;
+      margin: 0.3rem auto;
     }
     &__add{
       height: 2rem;
