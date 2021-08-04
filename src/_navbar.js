@@ -40,6 +40,7 @@ function projectController() {
     projects.push(todoList);
     let newProject = simpleHtmlTag.makeTag('button', 'project__list');
     newProject.setAttribute('data-projectName', todoList.getProjectName())
+    newProject.setAttribute('data-index', PROJECT.childElementCount - 2);
     newProject.innerHTML = todoList.getProjectName();
     PROJECT.appendChild(newProject);
   }
