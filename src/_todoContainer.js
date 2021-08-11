@@ -2,27 +2,27 @@ import simpleHtmlTag from "./_simplefuntion";
 import compareAsc from "date-fns/compareAsc";
 import format from "date-fns/format";
 function todoItem(name, description, dueDate/*, projectName*/) {
-  this.name = name;
-  this.description = description;
+  let myName = name;
+  let myDescription = description;
   // this.projectName = projectName;
-  this.dueDate = dueDate;
-  this.isDone = false;
-  this.isOverDue = (compareAsc(dueDate, new Date()) >= 0) ? false : true;
+  let myDueDate = dueDate;
+  let myIsDone = false;
+  let myIsOverDue = (compareAsc(dueDate, new Date()) >= 0) ? false : true;
 
   function setName(name) {
-    this.name = name;
+    myName = name;
   }
 
   function getName() {
-    return this.name;
+    return myName;
   }
 
   function setDescription(description) {
-    this.description = description;
+    myDescription = description;
   }
 
   function getDescription() {
-    return this.description;
+    return myDescription;
   }
 
   // function belongToProject(projectName) {
@@ -30,28 +30,28 @@ function todoItem(name, description, dueDate/*, projectName*/) {
   // }
 
   function setDueDate(dueDate) {
-    this.dueDate = dueDate;
+    myDueDate = dueDate;
   }
   function getDueDate() {
-    return this.dueDate;
+    return myDueDate;
   }
   function setIsDone(isDone) {
-    this.isDone = isDone;
+    myIsDone = isDone;
   }
 
   function getIsDone() {
-    return this.isDone;
+    return myIsDone;
   }
 
   function setIsOverDue(isOverDue) {
-    this.isOverDue = isOverDue;
+    myIsOverDue = isOverDue;
   }
 
   function getIsOverDue() {
-    return this.isOverDue;
+    return myIsOverDue;
   }
 
-  return { setName, getName, setDescription, getDescription, setDueDate, getDueDate, setIsDone, getIsDone, setIsOverDue, getIsDone };
+  return { setName, getName, setDescription, getDescription, setDueDate, getDueDate, setIsDone, getIsDone, setIsOverDue, getIsOverDue };
 }
 
 
