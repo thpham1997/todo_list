@@ -5,11 +5,11 @@ function todoList(projectName) {
   let name = projectName;
   let project = [];
 
-  function getProjectName() {
+  function getName() {
     return name;
   }
 
-  function getList() {
+  function getItems() {
     return project;
   }
 
@@ -30,19 +30,21 @@ function todoList(projectName) {
     return project.length;
   }
 
-  return { getList, add, getItem, deleteItem, getLength, getProjectName };
+  return { getItems, add, getItem, deleteItem, getLength, getName };
 }
 function projectController() {
   const PROJECT = document.querySelector('.project');
   let projects = [];
+  let curProjectIndex = undefined;
 
   function add(todoList) {
     projects.push(todoList);
-    let newProject = simpleHtmlTag.makeTag('button', 'project__list');
-    newProject.setAttribute('data-projectName', todoList.getProjectName())
-    newProject.setAttribute('data-index', PROJECT.childElementCount - 2);
-    newProject.innerHTML = todoList.getProjectName();
-    PROJECT.appendChild(newProject);
+    // let newProject = simpleHtmlTag.makeTag('button', 'project__list');
+    // newProject.setAttribute('data-projectName', todoList.getProjectName())
+    // newProject.setAttribute('data-index', PROJECT.childElementCount - 2);
+    // newProject.innerHTML = todoList.getProjectName();
+    // PROJECT.appendChild(newProject);
+    return projects.length - 1;
   }
   function getProjects() {
     return projects;
@@ -50,6 +52,9 @@ function projectController() {
 
   function getProject(index) {
     return projects[index];
+  }
+  function getProjectNum(){
+    return projects.length;
   }
   /**
   * return index or -1
@@ -68,7 +73,7 @@ function projectController() {
     project.setAttribute('data-projectName', newName);
   }
 
-  return { add, findProjectIndex, removeProject, changeProjectName, getProjects, getProject };
+  return { add, findProjectIndex, removeProject, changeProjectName, getProjects, getProject, getProjectNum };
 }
 function navbar() {
   let navBar = simpleHtmlTag.makeDiv('navbar');
@@ -77,8 +82,8 @@ function navbar() {
   allBtn.innerHTML = 'ALL';
   let todayBtn = simpleHtmlTag.makeTag('button', 'status__today');
   todayBtn.innerHTML = 'TODAY';
-  let finisedBtn = simpleHtmlTag.makeTag('button', 'status__finised');
-  finisedBtn.innerHTML = 'FINISH';
+  let finisedBtn = simpleHtmlTag.makeTag('button', 'status__finished');
+  finisedBtn.innerHTML = 'FINISHED';
   let notFinisedBtn = simpleHtmlTag.makeTag('button', 'status__notFinised');
   notFinisedBtn.innerHTML = 'NOT FINISHED';
 
