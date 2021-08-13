@@ -35,7 +35,7 @@ function todoList(projectName) {
 function projectController() {
   const PROJECT = document.querySelector('.project');
   let projects = [];
-  let curProjectIndex = undefined;
+  let curProject = undefined;
 
   function add(todoList) {
     projects.push(todoList);
@@ -56,6 +56,14 @@ function projectController() {
   function getProjectNum(){
     return projects.length;
   }
+
+  function setCurProject(index){
+    curProject = getProject(index);
+  }
+
+  function getCurProject(){
+    return curProject;
+  }
   /**
   * return index or -1
   */
@@ -73,7 +81,7 @@ function projectController() {
     project.setAttribute('data-projectName', newName);
   }
 
-  return { add, findProjectIndex, removeProject, changeProjectName, getProjects, getProject, getProjectNum };
+  return { add, findProjectIndex, removeProject, changeProjectName, getProjects, getProject, getProjectNum, setCurProject, getCurProject };
 }
 function navbar() {
   let navBar = simpleHtmlTag.makeDiv('navbar');
