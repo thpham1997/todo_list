@@ -138,7 +138,7 @@ function confirmBtnForm() {
     newProject.innerHTML = name;
     e.target.parentNode.parentNode.appendChild(newProject);
     newProject.addEventListener('click', (e) => {
-      projectBtnAddEvent(e.target);
+      projectBtnEvent(e.target);
     })
     e.target.parentNode.classList.toggle('show');
   })
@@ -154,41 +154,12 @@ function showTodoLists() {
     newList.setAttribute('data-index', index);
     newList.innerHTML = list.getName();
     PROJECT.appendChild(newList)
-    newList.addEventListener('click', (e)=>{
-      const NEWTODO_BTN = document.querySelector('.todoContainer__add');
-      clearTodoContainer();
-      NEWTODO_BTN.classList.add('show');
-      let listIndex = +(e.target.getAttribute('data-index'));
-      let list = projects.getProject(listIndex);
-      let items = list.getItems();
-      items.forEach((item) =>{
-        let div = simpleHtmlTag.makeDiv('todoItem');
-          div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-          TODO_CONTAINER.appendChild(div);
-      })
+    newList.addEventListener('click', (e) => {
+      projectBtnEvent(e.target);
     })
   })
 }
 
-// function confirmBtnForm() {
-//   const confirmBtn = document.querySelector('.project__confirm');
-//   confirmBtn.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     let name = e.target.parentNode.firstChild.value || 'default name';
-//     let list = new todoList(name);
-//     let index = projects.add(list);
-//     console.log(list);
-//     let newProject = simpleHtmlTag.makeTag('button', 'project__list');
-//     newProject.setAttribute('data-projectName', name);
-//     newProject.setAttribute('data-index', index);
-//     newProject.innerHTML = name;
-//     e.target.parentNode.parentNode.appendChild(newProject);
-//     newProject.addEventListener('click', (e) => {
-//       projectBtnAddEvent(e.target);
-//     })
-//     e.target.parentNode.classList.toggle('show');
-//   })
-// }
 
 function clearTodoContainer() {
   const TODO_CONTAINER = document.querySelector('.todoContainer');
@@ -198,16 +169,20 @@ function clearTodoContainer() {
   console.log('1');
 }
 
-function projectBtnAddEvent(node) {
+function projectBtnEvent(buttonNode) {
+  const TODO_CONTAINER = document.querySelector('.todoContainer');
+  const NEWTODO_BTN = document.querySelector('.todoContainer__add');
   clearTodoContainer();
-  console.log('2');
-  let index = node.getAttribute('data-index');
-  let project = projects.getProject(index);
-  project.add(new todoItem('default todo', 'This is a default', new Date(2022, 1, 1)));
-  project.getList().forEach((item) => {
-    let itemDiv = simpleHtmlTag.makeDiv('.todoContainer__item');
-    itemDiv.innerHTML = item.getName() + ' duedate:' + item.getDueDate();
-    todoContainer.appendChild(itemDiv);
+  NEWTODO_BTN.classList.add('show');
+  let listIndex = +(buttonNode.getAttribute('data-index'));
+  let list = projects.getProject(listIndex);
+  let items = list.getItems();
+  projects.setCurProject(listIndex);
+  console.log(projects.getCurProject().getName());
+  items.forEach((item) => {
+    let div = simpleHtmlTag.makeDiv('todoItem');
+    div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
+    TODO_CONTAINER.appendChild(div);
   })
 }
 
@@ -216,6 +191,18 @@ function cancelBtnForm() {
   cancelBtn.addEventListener('click', (e) => {
     e.target.parentNode.firstChild.value = '';
     e.target.parentNode.classList.toggle('show');
+  })
+}
+
+function newTodoBtn() {
+  const NEW_TOODOO = document.querySelector('.todoContainer__add');
+  const TODO_CONTAINER = document.querySelector('.todoContainer');
+  NEW_TOODOO.addEventListener('click', (e) => {
+    let item = new todoItem('test new toodoo btn', 'Shown then succeeded', new Date());
+    projects.getCurProject().add(item);
+    let div = simpleHtmlTag.makeDiv('todoItem');
+    div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
+    TODO_CONTAINER.appendChild(div);
   })
 }
 
@@ -228,8 +215,9 @@ function generalInterface() {
   unfinishedProjectsBtn();
   showTodoLists();
   addProjectBtn();
-  confirmBtnForm(projects);
+  confirmBtnForm();
   cancelBtnForm();
+  newTodoBtn();
 }
 
 export default generalInterface;
