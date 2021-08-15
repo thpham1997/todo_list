@@ -4,7 +4,8 @@ import { todoContainer, todoItem } from "./_todoContainer";
 
 
 const projects = projectController();
-
+const storage = Window.localStorage;
+// console.log(storage);
 
 
 function getData() {
@@ -27,6 +28,19 @@ function getData() {
   projects.add(todoList1);
   projects.add(todoList2);
   // end of data mangement
+}
+
+function storeData() {
+  let lists = projects.getProjects();
+  lists.forEach((list, index) => {
+    let items = list.getItems();
+    let itemsString = '';
+    items.forEach((item) => {
+      itemsString += (' ' + JSON.stringify(Object.create({ name: item.getName(), desc: item.getDescription(), dueDate: item.getDueDate() })));
+    })
+    if (itemsString !== '') itemsString = itemsString.slice(1);
+    console.log(itemsString);
+  })
 }
 
 function allProjectsBtn() {
@@ -163,7 +177,7 @@ function showTodoLists() {
 
 function clearTodoContainer() {
   const TODO_CONTAINER = document.querySelector('.todoContainer');
-  while (TODO_CONTAINER.childElementCount > 1) {
+  while (TODO_CONTAINER.childElementCount > 2) {
     TODO_CONTAINER.removeChild(TODO_CONTAINER.lastChild);
   };
   console.log('1');
@@ -196,19 +210,16 @@ function cancelBtnForm() {
 
 function newTodoBtn() {
   const NEW_TOODOO = document.querySelector('.todoContainer__add');
-  const TODO_CONTAINER = document.querySelector('.todoContainer');
   NEW_TOODOO.addEventListener('click', (e) => {
-    let item = new todoItem('test new toodoo btn', 'Shown then succeeded', new Date());
-    projects.getCurProject().add(item);
-    let div = simpleHtmlTag.makeDiv('todoItem');
-    div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-    TODO_CONTAINER.appendChild(div);
+    const TODO_FORM = document.querySelector('.todoContainer__form');
+    TODO_FORM.classList.toggle('show');
   })
 }
 
 
 function generalInterface() {
   getData();
+  storeData();
   allProjectsBtn();
   todayProjectsBtn();
   finishedProjectsBtn();
