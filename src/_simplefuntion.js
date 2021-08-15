@@ -2,7 +2,7 @@ const simpleHtmlTag = (function () {
 
   const makeTag = (tagType, className) => {
     let myTag = document.createElement(tagType);
-    myTag.classList.add(className);
+    if(className!=='') myTag.classList.add(className);
     return myTag;
   }
   const makeDiv = (className) => {
