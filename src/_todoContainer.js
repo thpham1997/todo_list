@@ -68,7 +68,7 @@ function todoContainer() {
   let dueDateLabel = simpleHtmlTag.makeTag('label', '')
   let itemName = simpleHtmlTag.makeTag('input', 'todoContainer__name');
   let itemDescription = simpleHtmlTag.makeTag('input', 'todoContainer__description');
-  let itemDueDate = simpleHtmlTag.makeTag('input', 'todoContainer__dueday');
+  let itemDueDate = simpleHtmlTag.makeTag('input', 'todoContainer__duedate');
   let confirmBtn = simpleHtmlTag.makeTag('button', 'todoContainer__confirm');
   confirmBtn.innerHTML = 'Confirm';
   confirmBtn.type = 'submit';
