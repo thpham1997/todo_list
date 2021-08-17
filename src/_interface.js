@@ -4,41 +4,69 @@ import { todoContainer, todoItem } from "./_todoContainer";
 
 
 const projects = projectController();
-const storage = Window.localStorage;
+
 // console.log(storage);
 
 
-function getData() {
+async function getData() {
   // get data (create default data here to demo)
-  let todoList1 = new todoList('My First List');
-  let todoItem1 = new todoItem('Item 1', 'Description 1', new Date(2022, 1, 1));
-  let todoItem2 = new todoItem('Item 2', 'Description 2', new Date());
-  todoItem1.setIsDone(true);
-  todoList1.add(todoItem1);
-  todoList1.add(todoItem2);
+  // let todoList1 = new todoList('My First List');
+  // let todoItem1 = new todoItem('Item 1', 'Description 1', new Date(2022, 1, 1));
+  // let todoItem2 = new todoItem('Item 2', 'Description 2', new Date());
+  // todoItem1.setIsDone(true);
+  // todoList1.add(todoItem1);
+  // todoList1.add(todoItem2);
 
-  let todoList2 = new todoList('My Second List');
-  let todoItem3 = new todoItem('Item 3', 'Description 3', new Date());
-  let todoItem4 = new todoItem('Item 4', 'Description 4', new Date(2022, 1, 1));
-  todoItem4.setIsDone(true);
-  todoList2.add(todoItem3);
-  todoList2.add(todoItem4);
+  // let todoList2 = new todoList('My Second List');
+  // let todoItem3 = new todoItem('Item 3', 'Description 3', new Date());
+  // let todoItem4 = new todoItem('Item 4', 'Description 4', new Date(2022, 1, 1));
+  // todoItem4.setIsDone(true);
+  // todoList2.add(todoItem3);
+  // todoList2.add(todoItem4);
 
 
-  projects.add(todoList1);
-  projects.add(todoList2);
+  // projects.add(todoList1);
+  // projects.add(todoList2);
+
+
+  let data = [];
+  let myStorage = window.localStorage;
+  for (let i = 0; i < myStorage.length; i++) {
+    let listName = await myStorage.key(i);
+    console.log(listName);
+    let listValues = await myStorage.getItem(listName);
+    data.push({
+      name: listName,
+      value: listValues
+    });
+
+  }
+  console.table(data);
+  data.forEach((list) => {
+    let listName = list.name;
+    let items = list.value.split('&');
+    items.forEach((item, index) => {
+      items[index] = JSON.parse(item);
+      let newItem = new todoItem(items[index].name, items[index].desc, new Date(Date.parse(items[index].dueDate)));
+      console.log(newItem.getDueDate());
+    })
+
+    console.log(items);
+  })
   // end of data mangement
 }
 
 function storeData() {
+  let myStorage = window.localStorage;
   let lists = projects.getProjects();
   lists.forEach((list, index) => {
     let items = list.getItems();
     let itemsString = '';
     items.forEach((item) => {
-      itemsString += (' ' + JSON.stringify(Object.create({ name: item.getName(), desc: item.getDescription(), dueDate: item.getDueDate() })));
+      itemsString += ('&' + JSON.stringify(Object.assign({}, { name: item.getName(), desc: item.getDescription(), dueDate: item.getDueDate() })));
     })
     if (itemsString !== '') itemsString = itemsString.slice(1);
+    myStorage.setItem(list.getName(), itemsString);
     console.log(itemsString);
   })
 }
@@ -138,7 +166,7 @@ function addProjectBtn() {
   })
 }
 
-function confirmBtnForm() {
+function projectConfirmBtnForm() {
   const CONFIRM_BTN = document.querySelector('.project__confirm');
   CONFIRM_BTN.addEventListener('click', (e) => {
     e.preventDefault();
@@ -154,6 +182,13 @@ function confirmBtnForm() {
     newProject.addEventListener('click', (e) => {
       projectBtnEvent(e.target);
     })
+    e.target.parentNode.classList.toggle('show');
+  })
+}
+function projectCancelBtnForm() {
+  const cancelBtn = document.querySelector('.project__cancel');
+  cancelBtn.addEventListener('click', (e) => {
+    e.target.parentNode.firstChild.value = '';
     e.target.parentNode.classList.toggle('show');
   })
 }
@@ -200,13 +235,7 @@ function projectBtnEvent(buttonNode) {
   })
 }
 
-function cancelBtnForm() {
-  const cancelBtn = document.querySelector('.project__cancel');
-  cancelBtn.addEventListener('click', (e) => {
-    e.target.parentNode.firstChild.value = '';
-    e.target.parentNode.classList.toggle('show');
-  })
-}
+
 
 function newTodoBtn() {
   const NEW_TOODOO = document.querySelector('.todoContainer__add');
@@ -216,18 +245,44 @@ function newTodoBtn() {
   })
 }
 
+function todoConfirmBtnForm() {
+  const CONFIRM_BTN = document.querySelector('.todoContainer__confirm');
+  CONFIRM_BTN.addEventListener('click', (e) => {
+    e.preventDefault();
+    const TODO_NAME = document.querySelector('.todoContainer__name');
+    const TODO_DESCRIPTION = document.querySelector('.todoContainer__description');
+    const TODO_DUEDATE = document.querySelector('.todoContainer__duedate');
+    const TODO_FORM = document.querySelector('.todoContainer__form');
+    const TODO_CONTAINER = document.querySelector('.todoContainer');
+    let name = TODO_NAME.value || 'default name';
+    let description = TODO_DESCRIPTION.value || 'default description';
+    let dueDate = TODO_DUEDATE.valueAsDate || new Date();
+    let item = new todoItem(name, description, dueDate);
+    projects.getCurProject().add(item);
+    let div = simpleHtmlTag.makeDiv('todoItem');
+    div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
+    TODO_CONTAINER.appendChild(div);
+    TODO_FORM.classList.remove('show');
+    TODO_NAME.value = '';
+    TODO_NAME.value || 'default name';
+    TODO_DESCRIPTION.value = '';
+    TODO_DUEDATE.value = '';
+  })
+}
+
 
 function generalInterface() {
   getData();
-  storeData();
+  // storeData();
   allProjectsBtn();
   todayProjectsBtn();
   finishedProjectsBtn();
   unfinishedProjectsBtn();
   showTodoLists();
   addProjectBtn();
-  confirmBtnForm();
-  cancelBtnForm();
+  projectConfirmBtnForm();
+  projectCancelBtnForm();
+  todoConfirmBtnForm();
   newTodoBtn();
 }
 
