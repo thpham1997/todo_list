@@ -53,15 +53,15 @@ function projectController() {
   function getProject(index) {
     return projects[index];
   }
-  function getProjectNum(){
+  function getProjectNum() {
     return projects.length;
   }
 
-  function setCurProject(index){
+  function setCurProject(index) {
     curProject = getProject(index);
   }
 
-  function getCurProject(){
+  function getCurProject() {
     return curProject;
   }
   /**
@@ -72,8 +72,11 @@ function projectController() {
   }
 
   function removeProject(project) {
-    let removedProject = PROJECT.removeChild(project);
     return projects.splice(findProjectIndex(removeProject.innerHTML), 1);
+  }
+
+  function clearAll() {
+    projects = [];
   }
 
   function changeProjectName(newName, project) {
@@ -81,7 +84,7 @@ function projectController() {
     project.setAttribute('data-projectName', newName);
   }
 
-  return { add, findProjectIndex, removeProject, changeProjectName, getProjects, getProject, getProjectNum, setCurProject, getCurProject };
+  return { add, findProjectIndex, removeProject, changeProjectName, getProjects, getProject, getProjectNum, setCurProject, getCurProject, clearAll };
 }
 function navbar() {
   let navBar = simpleHtmlTag.makeDiv('navbar');
@@ -119,7 +122,7 @@ function navbar() {
   addingForm.appendChild(confirmBtn);
   addingForm.appendChild(cancelBtn);
   projectDiv.appendChild(addProjectBtn);
-  
+
   navBar.appendChild(statusDiv);
   navBar.appendChild(projectDiv)
 
