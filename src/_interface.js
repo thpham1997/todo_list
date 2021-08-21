@@ -1,7 +1,7 @@
 import simpleHtmlTag from "./_simplefuntion";
 import { todoList, projectController } from "./_navbar";
-import { todoContainer, todoItem } from "./_todoContainer";
-
+import { todoItem } from "./_todoContainer";
+import todoCard from "./_todoCard";
 
 const projects = projectController();
 
@@ -31,7 +31,7 @@ function getData() {
     items.forEach((item, index) => {
       items[index] = JSON.parse(item);
       let newItem = new todoItem(items[index].name, items[index].desc, new Date(Date.parse(items[index].dueDate)));
-      if(newItem.getName() !== 'default') newList.add(newItem);
+      if (newItem.getName() !== 'default') newList.add(newItem);
     })
 
     projects.add(newList);
@@ -58,6 +58,15 @@ function storeData() {
   })
 }
 
+function btnDisplay(btn){
+  let activeBtn = document.querySelectorAll('.btn--active');
+  for(let i = 0; i < activeBtn.length; i++){
+    activeBtn[i].classList.remove('btn--active');
+  }
+
+  btn.classList.add('btn--active');
+}
+
 function allProjectsBtn() {
   const ALL_BTN = document.querySelector('.status__all');
   const TODO_CONTAINER = document.querySelector('.todoContainer');
@@ -65,14 +74,13 @@ function allProjectsBtn() {
   ALL_BTN.addEventListener('click', (e) => {
     clearTodoContainer();
     NEWTODO_BTN.classList.remove('show');
+    btnDisplay(e.target);
     // if (TODO_CONTAINER.hasChildNodes()) TODO_CONTAINER.removeChild(TODO_CONTAINER.firstChild);
     let lists = projects.getProjects();
     lists.forEach((list) => {
       let items = list.getItems();
       items.forEach((item) => {
-        let div = simpleHtmlTag.makeDiv('todoItem');
-        div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-        TODO_CONTAINER.appendChild(div);
+        TODO_CONTAINER.appendChild(todoCard(item.getName(), item.getDescription(), item.getDueDate()));
       })
     })
   })
@@ -85,6 +93,7 @@ function todayProjectsBtn() {
   TODAY_BTN.addEventListener('click', (e) => {
     clearTodoContainer();
     NEWTODO_BTN.classList.remove('show');
+    btnDisplay(e.target);
     let lists = projects.getProjects();
     lists.forEach((list) => {
       let items = list.getItems();
@@ -92,9 +101,7 @@ function todayProjectsBtn() {
         let dueDate = item.getDueDate();
         let today = new Date();
         if (dueDate.getDate() === today.getDate() && dueDate.getMonth() === today.getMonth() && dueDate.getYear() === today.getYear()) {
-          let div = simpleHtmlTag.makeDiv('todoItem');
-          div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-          TODO_CONTAINER.appendChild(div);
+          TODO_CONTAINER.appendChild(todoCard(item.getName(), item.getDescription(), item.getDueDate()));
         }
       })
     })
@@ -108,14 +115,13 @@ function finishedProjectsBtn() {
   FINISHED_BTN.addEventListener('click', (e) => {
     clearTodoContainer();
     NEWTODO_BTN.classList.remove('show');
+    btnDisplay(e.target);
     let lists = projects.getProjects();
     lists.forEach((list) => {
       let items = list.getItems();
       items.forEach((item) => {
         if (item.getIsDone()) {
-          let div = simpleHtmlTag.makeDiv('todoItem');
-          div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-          TODO_CONTAINER.appendChild(div);
+          TODO_CONTAINER.appendChild(todoCard(item.getName(), item.getDescription(), item.getDueDate()));
         }
       })
     })
@@ -129,14 +135,13 @@ function unfinishedProjectsBtn() {
   UNFINISHED_BTN.addEventListener('click', (e) => {
     clearTodoContainer();
     NEWTODO_BTN.classList.remove('show');
+    btnDisplay(e.target);
     let lists = projects.getProjects();
     lists.forEach((list) => {
       let items = list.getItems();
       items.forEach((item) => {
         if (!item.getIsDone()) {
-          let div = simpleHtmlTag.makeDiv('todoItem');
-          div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-          TODO_CONTAINER.appendChild(div);
+          TODO_CONTAINER.appendChild(todoCard(item.getName(), item.getDescription(), item.getDueDate()));
         }
       })
     })
@@ -148,6 +153,7 @@ function addProjectBtn() {
   const ADD_PROJECT_BUTTON = document.querySelector('.project__add');
   const ADD_PROJECT_FORM = document.querySelector('.project__form');
   ADD_PROJECT_BUTTON.addEventListener('click', (e) => {
+    btnDisplay(e.target);
     ADD_PROJECT_FORM.classList.toggle('show');
     ADD_PROJECT_FORM.firstChild.value = '';
   })
@@ -171,6 +177,7 @@ function projectConfirmBtnForm() {
     showTodoLists();
     newProject.addEventListener('click', (e) => {
       projectBtnEvent(e.target);
+      btnDisplay(e.target);
     })
     e.target.parentNode.classList.toggle('show');
   })
@@ -186,7 +193,7 @@ function projectCancelBtnForm() {
 function showTodoLists() {
   const PROJECT = document.querySelector('.project');
   let lists = projects.getProjects();
-  while(PROJECT.childElementCount > 2){
+  while (PROJECT.childElementCount > 2) {
     PROJECT.removeChild(PROJECT.lastChild);
   }
   lists.forEach((list, index) => {
@@ -196,6 +203,7 @@ function showTodoLists() {
     newList.innerHTML = list.getName();
     PROJECT.appendChild(newList)
     newList.addEventListener('click', (e) => {
+      btnDisplay(e.target);
       projectBtnEvent(e.target);
     })
   })
@@ -221,9 +229,7 @@ function projectBtnEvent(buttonNode) {
   projects.setCurProject(listIndex);
   console.log(projects.getCurProject().getName());
   items.forEach((item) => {
-    let div = simpleHtmlTag.makeDiv('todoItem');
-    div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-    TODO_CONTAINER.appendChild(div);
+    TODO_CONTAINER.appendChild(todoCard(item.getName(), item.getDescription(), item.getDueDate()));
   })
 }
 
@@ -251,9 +257,7 @@ function todoConfirmBtnForm() {
     let dueDate = TODO_DUEDATE.valueAsDate || new Date();
     let item = new todoItem(name, description, dueDate);
     projects.getCurProject().add(item);
-    let div = simpleHtmlTag.makeDiv('todoItem');
-    div.innerHTML = item.getName() + '----' + item.getDescription() + '----' + item.getDueDate();
-    TODO_CONTAINER.appendChild(div);
+    TODO_CONTAINER.appendChild(todoCard(item.getName(), item.getDescription(), item.getDueDate()));
     TODO_FORM.classList.remove('show');
     TODO_NAME.value = '';
     TODO_NAME.value || 'default name';
