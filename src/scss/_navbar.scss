@@ -1,34 +1,62 @@
-.navbar{
+.navbar {
   grid-area: navbar;
   display: grid;
   grid-template-rows: 50% 50%;
-  .status{
+  background-color: rgb(112, 151, 117);
+  margin: 0.5rem 0.5rem;
+  border-radius: 0.5rem;
+  .status {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    & *{
+    & > button {
       font-weight: bold;
-      width: 8rem;
+      width: 90%;
       height: 2.4rem;
+      border-radius: 0.5rem;
+      border-width: 0;
+      background-color: inherit;
+      &:hover {
+        background-color: rgb(161, 204, 165);
+        color: rgb(17, 29, 19);
+      }
     }
+    .btn--active {
+      background-color: rgb(65, 93, 67);
+      color: rgb(17, 29, 19);
+    }
+    
   }
 
-  .project{
+  .project {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    & > button{
+    & > button {
       font-weight: bold;
-      width: 8rem;
+      width: 90%;
       height: 2.4rem;
-      margin: 0.3rem auto;
+      border-radius: 0.5rem;
+      border-width: 0;
+      background-color: inherit;
+      &:hover {
+        background-color: rgb(161, 204, 165);
+        color: rgb(17, 29, 19);
+      }
     }
-    &__add{
+    &__add {
       height: 2rem;
       font-size: 1.2rem;
       margin: 1rem auto;
     }
+    .btn--active {
+      background-color: rgb(65, 93, 67);
+      color: rgb(17, 29, 19);
+    }
   }
+
+ 
 }
+
