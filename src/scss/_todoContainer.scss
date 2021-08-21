@@ -1,4 +1,5 @@
-
-.todoContainer__add{
-  display: none;
+.todoContainer {
+  &__add {
+    display: none;
+  }
 }
