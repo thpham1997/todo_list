@@ -1,0 +1,28 @@
+.card{
+  background-color: rgb(93, 131, 97);
+  width: 85%;
+  border-radius: 0.3rem;
+  margin: 0.5rem auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+  &:hover{
+    background-color: rgb(40, 56, 41);
+    color: rgb(255, 255, 255);
+    width: 90%;
+    font-weight: bold;
+  }
+  &__name{
+    align-self: center;
+    margin: 0.4rem auto;
+  }
+  &__description{
+    align-self: center;
+    margin: 0.4rem auto;
+  }
+  &__duedate{
+    align-self: flex-end;
+    margin: 0.4rem 0.5rem;
+  }
+}
