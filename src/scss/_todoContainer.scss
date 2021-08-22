@@ -1,4 +1,8 @@
 .todoContainer {
+  margin: 0.5rem 0.5rem;
+  background-color: rgb(161, 204, 165);
+  border-radius: 0.5rem;
+  overflow: auto;
   &__add {
     display: none;
   }
