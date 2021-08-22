@@ -58,9 +58,9 @@ function storeData() {
   })
 }
 
-function btnDisplay(btn){
+function btnDisplay(btn) {
   let activeBtn = document.querySelectorAll('.btn--active');
-  for(let i = 0; i < activeBtn.length; i++){
+  for (let i = 0; i < activeBtn.length; i++) {
     activeBtn[i].classList.remove('btn--active');
   }
 
@@ -155,6 +155,7 @@ function addProjectBtn() {
   ADD_PROJECT_BUTTON.addEventListener('click', (e) => {
     btnDisplay(e.target);
     ADD_PROJECT_FORM.classList.toggle('show');
+    ADD_PROJECT_FORM.classList.contains('show') ? ADD_PROJECT_BUTTON.textContent = '-' : ADD_PROJECT_BUTTON.textContent = '+';
     ADD_PROJECT_FORM.firstChild.value = '';
   })
 }
