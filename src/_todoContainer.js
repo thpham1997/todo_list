@@ -88,7 +88,7 @@ function todoContainer() {
     let now = new Date();
     let year = now.getFullYear();
     let month = (now.getMonth() + 1) < 10 ? '0' + (now.getMonth() + 1) : (now.getMonth() + 1);
-    let day = now.getDate() + 1 < 10 ? '0' + (now.getDate() + 1) : now.getDate() + 1;
+    let day = now.getDate() + 1 < 10 ? '0' + now.getDate() : now.getDate();
     return year + '-' + month + '-' + day;
   })();
   nameLabel.innerHTML = 'Name';
