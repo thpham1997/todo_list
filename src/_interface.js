@@ -269,6 +269,22 @@ function todoConfirmBtnForm() {
   })
 }
 
+function todoCancelBtnForm(){
+  const CANCEL_BTN = document.querySelector('.todoContainer__cancel');
+  CANCEL_BTN.addEventListener('click', (e) => {
+    e.preventDefault();
+    const TODO_NAME = document.querySelector('.todoContainer__name');
+    const TODO_DESCRIPTION = document.querySelector('.todoContainer__description');
+    const TODO_DUEDATE = document.querySelector('.todoContainer__duedate');
+    const TODO_FORM = document.querySelector('.todoContainer__form');
+    TODO_FORM.classList.remove('show');
+    TODO_NAME.value = '';
+    TODO_NAME.value || 'default name';
+    TODO_DESCRIPTION.value = '';
+    TODO_DUEDATE.value = '';
+  })
+}
+
 
 function generalInterface() {
   getData();
@@ -282,6 +298,7 @@ function generalInterface() {
   projectConfirmBtnForm();
   projectCancelBtnForm();
   todoConfirmBtnForm();
+  todoCancelBtnForm();
   newTodoBtn();
 }
 
