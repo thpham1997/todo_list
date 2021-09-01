@@ -229,8 +229,17 @@ function projectBtnEvent(buttonNode) {
   let items = list.getItems();
   projects.setCurProject(listIndex);
   console.log(projects.getCurProject().getName());
-  items.forEach((item) => {
-    TODO_CONTAINER.appendChild(todoCard(item.getName(), item.getDescription(), item.getDueDate()));
+  items.forEach((item, index) => {
+    let card = todoCard(item.getName(), item.getDescription(), item.getDueDate());
+    TODO_CONTAINER.appendChild(card);
+    card.addEventListener('click', (e) => {
+      console.log(list.getItems());
+      e.target.parentNode.removeChild(e.target);
+      list.deleteItem(index);
+      console.log(list.getItems());
+      storeData();
+      getData();
+    })
   })
 }
 
@@ -269,7 +278,7 @@ function todoConfirmBtnForm() {
   })
 }
 
-function todoCancelBtnForm(){
+function todoCancelBtnForm() {
   const CANCEL_BTN = document.querySelector('.todoContainer__cancel');
   CANCEL_BTN.addEventListener('click', (e) => {
     e.preventDefault();
